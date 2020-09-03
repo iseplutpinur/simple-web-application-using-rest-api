@@ -273,7 +273,7 @@ if(isset($_GET['get'])){
 				(NULL, '$id_jenis', '$id_bahasa', '$id_tingkat', '1', '$nama', '$catatan', '$total', '$selesai')";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(201);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -288,7 +288,7 @@ if(isset($_GET['get'])){
 		$sql = "INSERT INTO `jenis` (`id`, `nama_jenis`, `id_user`) VALUES (NULL, '$nama_jenis', '1')";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(201);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -303,7 +303,7 @@ if(isset($_GET['get'])){
 		$sql = "INSERT INTO `tingkat` (`id`, `nama_tingkat`, `id_user`) VALUES (NULL, '$nama_tingkat', '1')";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(201);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -318,7 +318,7 @@ if(isset($_GET['get'])){
 		$sql = "INSERT INTO `bahasa` (`id`, `nama_bahasa`, `id_user`) VALUES (NULL, '$nama_bahasa', '1')";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(201);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -355,7 +355,7 @@ if(isset($_GET['get'])){
 			`data`.`id_data` = '$id_data'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -371,7 +371,7 @@ if(isset($_GET['get'])){
 		$sql = "UPDATE `jenis` SET `nama_jenis` = '$nama_jenis' WHERE `id`='$id'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -387,7 +387,7 @@ if(isset($_GET['get'])){
 		$sql = "UPDATE `tingkat` SET `nama_tingkat` = '$nama_tingkat' WHERE `id`='$id'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -403,7 +403,7 @@ if(isset($_GET['get'])){
 		$sql = "UPDATE `bahasa` SET `nama_bahasa` = '$nama_bahasa' WHERE `id`='$id'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -422,7 +422,7 @@ if(isset($_GET['get'])){
 		$sql = "DELETE FROM `data` WHERE `data`.`id_data` = '$id'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -437,7 +437,7 @@ if(isset($_GET['get'])){
 		$sql = "DELETE FROM `jenis` WHERE `jenis`.`id` = '$id'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -452,7 +452,7 @@ if(isset($_GET['get'])){
 		$sql = "DELETE FROM `tingkat` WHERE `tingkat`.`id` = '$id'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;
@@ -467,7 +467,7 @@ if(isset($_GET['get'])){
 		$sql = "DELETE FROM `bahasa` WHERE `bahasa`.`id` = '$id'";
 		if (mysqli_query($conn, $sql)) {
 			$data['response'] = true;
-			http_response_code(200);
+			http_response_code(202);
 			echo json_encode($data);
 		} else {
 			$data['response'] = false;

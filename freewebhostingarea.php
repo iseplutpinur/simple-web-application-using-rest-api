@@ -2,9 +2,13 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 define('HOST','localhost');
-define('USER','123362');
-define('PASS','Sukses123');
-define('DB','123362');
+// define('USER','123362');
+// define('PASS','Sukses123');
+// define('DB','123362');
+
+define('USER','root');
+define('PASS','');
+define('DB','cat_pb');
 $conn = new mysqli(HOST,USER,PASS,DB) or die('Connetion error to the database');
 
 if(isset($_GET['get'])){
@@ -116,54 +120,46 @@ if(isset($_GET['get'])){
 			$data['dataTambah']['bahasa']  = getMasterData('bahasa');
 			$data['dataTambah']['tingkat'] = getMasterData('tingkat');
 		}
-		$data['response'] = true;
-		http_response_code(200);
-		echo json_encode($data);
+		responseResult($data, 200, true, "successfully retieved data");
 	}
 
 	function getJenis(){
 		if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-			$dataJumlah = getDataForDisplay('data.id_jenis', $_GET['id']);
-			$display    = getMasterData('jenis', $_GET['id']);
-		    $data = [	'data'   => $display,
-						'jumlah' => $dataJumlah,
-						'review' => getDataForDisplayReview($dataJumlah)];
+			$dataJumlah   = getDataForDisplay('data.id_jenis', $_GET['id']);
+			$display      = getMasterData('jenis', $_GET['id']);
+		    $data['data'] = ['data' => $display,
+						'jumlah'    => $dataJumlah,
+						'review'    => getDataForDisplayReview($dataJumlah)];
 		} else {
-			$data = getMasterDataJumlah('jenis','id_jenis');
+			$data['data'] = getMasterDataJumlah('jenis','id_jenis');
 		}
-		$data['response'] = true;
-		http_response_code(200);
-		echo json_encode($data);
+		responseResult($data, 200, true, "successfully retieved data");
 	}
 
 	function getBahasa(){
 		if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-			$dataJumlah = getDataForDisplay('data.id_bahasa', $_GET['id']);
-			$display    = getMasterData('bahasa', $_GET['id']);
-		    $data = [	'data'   => $display,
-						'jumlah' => $dataJumlah,
-						'review' => getDataForDisplayReview($dataJumlah)];
+			$dataJumlah   = getDataForDisplay('data.id_bahasa', $_GET['id']);
+			$display      = getMasterData('bahasa', $_GET['id']);
+		    $data['data'] = ['data' => $display,
+						'jumlah'    => $dataJumlah,
+						'review'    => getDataForDisplayReview($dataJumlah)];
 		} else {
-			$data = getMasterDataJumlah('bahasa','id_bahasa');
+			$data['data'] = getMasterDataJumlah('bahasa','id_bahasa');
 		}
-		$data['response'] = true;
-		http_response_code(200);
-		echo json_encode($data);
+		responseResult($data, 200, true, "successfully retieved data");
 	}
 
 	function getTingkat(){
 		if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-			$dataJumlah = getDataForDisplay('data.id_tingkat', $_GET['id']);
-			$display    = getMasterData('tingkat', $_GET['id']);
-		    $data = [	'data'   => $display,
-						'jumlah' => $dataJumlah,
-						'review' => getDataForDisplayReview($dataJumlah)];
+			$dataJumlah   = getDataForDisplay('data.id_tingkat', $_GET['id']);
+			$display      = getMasterData('tingkat', $_GET['id']);
+		    $data['data'] = ['data' => $display,
+						'jumlah'    => $dataJumlah,
+						'review'    => getDataForDisplayReview($dataJumlah)];
 		} else {
-			$data = getMasterDataJumlah('tingkat','id_tingkat');
+			$data['data'] = getMasterDataJumlah('tingkat','id_tingkat');
 		}
-		$data['response'] = true;
-		http_response_code(200);
-		echo json_encode($data);
+		responseResult($data, 200, true, "successfully retieved data");
 	}
 
 	// Tools function
@@ -272,13 +268,9 @@ if(isset($_GET['get'])){
 				VALUES 
 				(NULL, '$id_jenis', '$id_bahasa', '$id_tingkat', '1', '$nama', '$catatan', '$total', '$selesai')";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(201);
-			echo json_encode($data);
+			responseResult([], 201, true, "data was succesfully added");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -287,13 +279,9 @@ if(isset($_GET['get'])){
 		$nama_jenis = $_POST['nama'];
 		$sql = "INSERT INTO `jenis` (`id`, `nama_jenis`, `id_user`) VALUES (NULL, '$nama_jenis', '1')";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(201);
-			echo json_encode($data);
+			responseResult([], 201, true, "data was succesfully added");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -302,13 +290,9 @@ if(isset($_GET['get'])){
 		$nama_tingkat = $_POST['nama'];
 		$sql = "INSERT INTO `tingkat` (`id`, `nama_tingkat`, `id_user`) VALUES (NULL, '$nama_tingkat', '1')";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(201);
-			echo json_encode($data);
+			responseResult([], 201, true, "data was succesfully added");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -317,13 +301,9 @@ if(isset($_GET['get'])){
 		$nama_bahasa = $_POST['nama'];
 		$sql = "INSERT INTO `bahasa` (`id`, `nama_bahasa`, `id_user`) VALUES (NULL, '$nama_bahasa', '1')";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(201);
-			echo json_encode($data);
+			responseResult([], 201, true, "data was succesfully added");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 // ============================================================
@@ -354,13 +334,9 @@ if(isset($_GET['get'])){
 			WHERE 
 			`data`.`id_data` = '$id_data'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data has been changed");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -370,13 +346,9 @@ if(isset($_GET['get'])){
 		$nama_jenis = $_POST['nama'];
 		$sql = "UPDATE `jenis` SET `nama_jenis` = '$nama_jenis' WHERE `id`='$id'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data has been changed");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -386,13 +358,9 @@ if(isset($_GET['get'])){
 		$nama_tingkat = $_POST['nama'];
 		$sql = "UPDATE `tingkat` SET `nama_tingkat` = '$nama_tingkat' WHERE `id`='$id'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data has been changed");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -402,13 +370,9 @@ if(isset($_GET['get'])){
 		$nama_bahasa = $_POST['nama'];
 		$sql = "UPDATE `bahasa` SET `nama_bahasa` = '$nama_bahasa' WHERE `id`='$id'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data has been changed");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 // ============================================================
@@ -421,13 +385,9 @@ if(isset($_GET['get'])){
 		$id = $_GET['id'];
 		$sql = "DELETE FROM `data` WHERE `data`.`id_data` = '$id'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data was deleted successfully");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -436,13 +396,9 @@ if(isset($_GET['get'])){
 		$id = $_GET['id'];
 		$sql = "DELETE FROM `jenis` WHERE `jenis`.`id` = '$id'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data was deleted successfully");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -451,13 +407,9 @@ if(isset($_GET['get'])){
 		$id = $_GET['id'];
 		$sql = "DELETE FROM `tingkat` WHERE `tingkat`.`id` = '$id'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data was deleted successfully");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 
@@ -466,13 +418,9 @@ if(isset($_GET['get'])){
 		$id = $_GET['id'];
 		$sql = "DELETE FROM `bahasa` WHERE `bahasa`.`id` = '$id'";
 		if (mysqli_query($conn, $sql)) {
-			$data['response'] = true;
-			http_response_code(202);
-			echo json_encode($data);
+			responseResult([], 202, true, "data was deleted successfully");
 		} else {
-			$data['response'] = false;
-			http_response_code(500);
-			echo json_encode($data);
+			responseResult([], 500, false, "internal server error");
 		}
 	}
 // ============================================================
@@ -498,5 +446,13 @@ if(isset($_GET['get'])){
 		];
 		echo json_encode($data);
 	}
+
+	function responseResult($data, $coode, $response, $message){
+		$data['response'] = $response;
+		$data['message'] = $message;
+		http_response_code(200);
+		echo json_encode($data);
+	}
+
 // ============================================================
 // END TOOLS

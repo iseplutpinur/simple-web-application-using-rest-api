@@ -109,7 +109,7 @@ function detailData(data){
 	const tableHead = `
 		<div class="row">
 			<div class="col">
-				<table id="table-data-detail table-responsive" class="table table-bordered table-striped table-hover">
+				<table id="table-data-detail" class="table table-responsive table-bordered table-striped table-hover">
 					<thead>
 						<tr>
 							<th>No</th>

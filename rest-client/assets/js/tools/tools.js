@@ -1,8 +1,8 @@
 // alert
 var cekKoneksi = false;
 var temporary  = {};
-// const baseurl  = 'http://localhost/aplikasi/cpb_server/rest-server/freewebhostingarea.php';
-const baseurl  = 'http://iseplutpi.eu5.org/aplikasi/cpb/index.php';
+const baseurl  = 'http://localhost/aplikasi/cpb_server/rest-server/freewebhostingarea.php';
+// const baseurl  = 'http://iseplutpi.eu5.org/aplikasi/cpb/index.php';
 function smartAlert(icon, title){
 	const Toast = Swal.mixin({
 		toast: true,

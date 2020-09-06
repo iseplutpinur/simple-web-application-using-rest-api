@@ -4,6 +4,7 @@ $(".navigation").on('click', function(event) {
 	for(let i = 0; i < allNav.length; i++){
 		if (this == allNav[i]) {
 			allNav[i].setAttribute('class', 'nav-link navigation active');
+			document.title = allNav[i].innerText + " | Catatan Progres Belajar";
 			switchMenu(this.id);
 		} else allNav[i].setAttribute('class', 'nav-link navigation');
 	}

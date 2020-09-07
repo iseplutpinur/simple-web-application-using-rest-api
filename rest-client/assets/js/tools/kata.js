@@ -1,7 +1,16 @@
-var timerKataKata = setInterval(function(){
+var timerKataKata = null;
+
+function kataKataStop(){
+	clearInterval(timerKataKata);
+}
+
+function kataKataRun(){
+	timerKataKata = setInterval(function(){
+		document.getElementById("kata-kata-container").innerHTML = kataKata();
+	}, 20000);
 	document.getElementById("kata-kata-container").innerHTML = kataKata();
-}, 20000);
-document.getElementById("kata-kata-container").innerHTML = kataKata();
+}
+
 
 function kataKata(){
 	const q1 = '<strong>';

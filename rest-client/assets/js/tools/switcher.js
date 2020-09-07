@@ -1,37 +1,51 @@
 function mainPageSwitcher(menu = false){
 	const loginLayer = `
-		<div class="login-box">
-		  <div class="login-logo">
-		    <a href="#"><b>Cat</b>PB</a>
-		  </div>
-		  <div class="card">
-		    <div class="card-body login-card-body">
-		      <p class="login-box-msg">Login Aplikasi Catatan Progres Belajar</p>
-		      <form action="#" method="post">
-		        <div class="input-group mb-3">
-		          <input type="text" class="form-control" placeholder="Username" id="login-username-input">
-		          <div class="input-group-append">
-		            <div class="input-group-text">
-		              <span class="fas fa-user"></span>
-		            </div>
-		          </div>
-		        </div>
-		        <div class="input-group mb-3">
-		          <input type="password" class="form-control" placeholder="Password" id="login-password-input">
-		          <div class="input-group-append" id="login-password-icon">
-		            <div class="input-group-text">
-		              <span class="far fa-eye-slash"></span>
-		            </div>
-		          </div>
-		        </div>
-		        <div class="input-group mb-3">
-		        	<button type="button" class="btn btn-block btn-primary" id="login-btn">Login</button>
-		        </div>
-		        <span id="login-alert" class="text-danger"></span>
-		      </form>
-		    </div>
-		  </div>
-		</div>
+	<style>
+		.container #login-row #login-column #login-box {
+		  margin-top: 120px;
+		  max-width: 600px;
+		  height: 350px;
+		  background-color: #EAEAEA;
+		}
+		.container #login-row #login-column #login-box #login-form {
+		  padding: 20px;
+		}
+
+		.clear{
+			clear: both;
+		}
+	</style>
+        <div class="container" class="shadow-lg">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="" method="post">
+                            <h3 class="text-center text-info">Login</h3>
+                            <div class="form-group">
+                                <label for="login-username-input" class="text-info">Username:</label><br>
+                                <input type="text" name="login-username-input" id="login-username-input" class="form-control" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password-input" class="text-info">Password:</label><br>
+								<div class="input-group mb-2">
+									<input type="password" class="form-control" id="login-password-input" name="login-password-input" placeholder="Password">
+									<div class="input-group-append" id="login-password-icon">
+										<div class="input-group-text"><span class="far fa-eye-slash"></span></div>
+									</div>
+								</div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-block btn-primary" id="login-btn">Login</button>
+                            </div>
+                            <div class="form-group">
+                                <span id="login-alert" class="text-danger text-center"></span>
+                            </div>
+                        </form>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<script>
 			$('#login-password-icon').on('click', ()=>{
 				let login_password_input = $('#login-password-input');
@@ -143,8 +157,7 @@ function mainPageSwitcher(menu = false){
 	} else {
 		kataKataStop();
 		mainPageLayer.html(loginLayer);
-		document.body.setAttribute('class', 'hold-transition login-page');
-		document.body.removeAttribute('style');
+		document.body.setAttribute('style', 'margin: 0; padding: 0; background-color: #17a2b8; height: 100vh;');
 		document.title = "Login";
 	}
 

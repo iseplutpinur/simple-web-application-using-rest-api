@@ -43,8 +43,37 @@ function mainLoadingLayer2(data = null){
 }
 
 function dataReview(data){
-	return `
-		<div class="row">
+	let textHtml = {};
+	textHtml['jmlMateri']         = ``;
+	textHtml['materiSelesai']     = ``;
+	textHtml['materiSelesai1']  = `
+		<div class="col-12 col-sm-6 col-md-3 zoom-hover">
+			<div class="info-box mb-3">
+				<span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">Materi Selesai</span>
+					<span class="info-box-number">${data.jumlahMateriVideoSelesai} Dari ${data.jumlahMateriVideo} Materi</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>`;
+	textHtml['rataRataSelesai'] = `
+		<!-- /.col -->
+		<div class="col-12 col-sm-6 col-md-3 zoom-hover">
+			<div class="info-box mb-3">
+				<span class="info-box-icon bg-warning elevation-1"><i class="far fa-bookmark"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">Rata Rata Selesai</span>
+					<span class="info-box-number">${data.rataRataSelesai}%</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<!-- /.col -->`;
+	if (data.jmlMateri > 1) {
+		textHtml['jmlMateri'] = `
 			<div class="col-12 col-sm-6 col-md-3 zoom-hover">
 				<div class="info-box">
 					<span class="info-box-icon bg-info elevation-1"><i class="fas fa-book"></i></span>
@@ -57,8 +86,8 @@ function dataReview(data){
 					<!-- /.info-box-content -->
 				</div>
 				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
+			</div>`;
+		textHtml['materiSelesai'] = `
 			<div class="col-12 col-sm-6 col-md-3 zoom-hover">
 				<div class="info-box mb-3">
 					<span class="info-box-icon bg-danger elevation-1"><i class="fas fa-bookmark"></i></span>
@@ -69,34 +98,14 @@ function dataReview(data){
 					<!-- /.info-box-content -->
 				</div>
 				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<!-- fix for small devices only -->
-			<div class="clearfix hidden-md-up"></div>
-			<div class="col-12 col-sm-6 col-md-3 zoom-hover">
-				<div class="info-box mb-3">
-					<span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Materi Selesai</span>
-						<span class="info-box-number">${data.jumlahMateriVideoSelesai} Dari ${data.jumlahMateriVideo} Video</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-12 col-sm-6 col-md-3 zoom-hover">
-				<div class="info-box mb-3">
-					<span class="info-box-icon bg-warning elevation-1"><i class="far fa-bookmark"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Rata Rata Selesai</span>
-						<span class="info-box-number">${data.rataRataSelesai}%</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
+			</div> <div class="clearfix hidden-md-up"></div>`;
+	}
+	return `
+		<div class="row">
+			${textHtml.jmlMateri}
+			${textHtml.materiSelesai}
+			${textHtml.materiSelesai1}
+			${textHtml.rataRataSelesai}
 		</div>
 	`;
 }
@@ -303,7 +312,9 @@ function detailDataLayer(idxyz){
 								<div class="col">
 									<div class="form-group">
 										<label for="catatan_detail_data">Catatan</label>
-										<textarea disabled="" name="catatan_detail_data" id="catatan_detail_data" class="form-control">${index.catatan}</textarea>
+										<div id="detail-form-catatan">
+											<textarea disabled="" name="catatan_detail_data" id="catatan_detail_data" class="form-control">${index.catatan}</textarea>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -337,8 +348,10 @@ function detailDataLayer(idxyz){
 			temporary['selesai_detail_data'] = $('#selesai_detail_data');
 			temporary['catatan_detail_data'] = $('#catatan_detail_data');
 			temporary['temp_detail_data']    = [];
+			$('#detail-form-catatan').html('<pre>'+temporary['catatan_detail_data'].val()+'</pre>');
 
 			function editData_detail_data(){
+				$('#detail-form-catatan').html('<textarea name="catatan_detail_data" id="catatan_detail_data" class="form-control">'+temporary['catatan_detail_data'].val()+'</textarea>');
 				temporary.jenis_detail_data.removeAttr("disabled");
 				temporary.bahasa_detail_data.removeAttr("disabled");
 				temporary.tingkat_detail_data.removeAttr("disabled");
@@ -365,13 +378,13 @@ function detailDataLayer(idxyz){
 			}
 
 			function resetData_detail_data(){
+				$('#detail-form-catatan').html('<pre>'+temporary['catatan_detail_data'].val()+'</pre>');
 				temporary.jenis_detail_data.val(temporary.temp_detail_data['jenis_detail_data']);
 				temporary.bahasa_detail_data.val(temporary.temp_detail_data['bahasa_detail_data']);
 				temporary.tingkat_detail_data.val(temporary.temp_detail_data['tingkat_detail_data']);
 				temporary.nama_detail_data.val(temporary.temp_detail_data['nama_detail_data']);
 				temporary.total_detail_data.val(temporary.temp_detail_data['total_detail_data']);
-				temporary.selesai_detail_data.val(temporary.temp_detail_data['selesai_detail_data']);
-				temporary.catatan_detail_data.val(temporary.temp_detail_data['catatan_detail_data']);
+				temporary.selesai_detail_data.val(temporary.temp_detail_data['selesai_detail_data']);$('#detail-form-catatan').html('<p><pre>'+temporary['catatan_detail_data'].val()+'</pre></p>');\
 				$('button[name=edit]').removeAttr("hidden");
 				$('button[name=delete]').removeAttr("hidden");
 				$('button[name=reset]').attr("hidden", "");

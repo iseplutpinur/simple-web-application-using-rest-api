@@ -187,11 +187,21 @@ function switchMenu(id){
 }
 
 function loginAction(data){
-	if(data.username == 'iseplutpi' && data.password == '1234'){
-		mainPageSwitcher(true);
+	if(enkripsi(data.username) == '0049007300650070006c0075007400700069' && enkripsi(data.password) == '0031003200330034'){
+		mainPageSwitcher('0031003200330034');
 	} else {
 		data.alert.text('Username atau password yang anda masukan salah')
 	}
 }
 
+function enkripsi(data){
+	let hex, i;
+	let result = "";
+
+	for (i=0; i<data.length; i++) {
+		hex = data.charCodeAt(i).toString(16);
+		result += ("000"+hex).slice(-4);
+	}
+	return result;
+}
 mainPageSwitcher();

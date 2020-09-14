@@ -35,6 +35,9 @@ function tingkat(alert = null){
 												<th>Nama</th>
 												<th>Total</th>
 												<th>Selesai</th>
+												<th>Materi Total</th>
+												<th>Materi Selesai</th>
+												<th>Persentese</th>
 												<th>Opsi</th>
 											</tr>
 										</thead>
@@ -47,6 +50,9 @@ function tingkat(alert = null){
 		<th>Nama</th>
 		<th>Total</th>
 		<th>Selesai</th>
+		<th>Materi Total</th>
+		<th>Materi Selesai</th>
+		<th>Persentese</th>
 		<th>Opsi</th>
 		</tr>
 		</tfoot>
@@ -59,19 +65,22 @@ function tingkat(alert = null){
 		</section>`;
 	const tableBody   = (data) => {
 		let table = ``;
-		for (let i = 0; i<data.length; i++){
+		data.forEach((result, i)=>{
 			table += `
 				<tr>
 					<td style="width: 10px;">${i+1}</td>
-					<td>${data[i].data.nama_tingkat}</td>
-					<td class="text-right">${data[i].jumlah.length}</td>
-					<td class="text-right">${data[i].review.jumlahMateriSelesai}</td>
+					<td>${result.data.nama_tingkat}</td>
+					<td class="text-right">${result.jumlah.length}</td>
+					<td class="text-right">${result.review.jumlahMateriSelesai}</td>
+					<td class="text-right">${countMateri(result.jumlah)}</td>
+					<td class="text-right">${countMateri(result.jumlah, 'selesai')}</td>
+					<td class="text-right">${countMateri(result.jumlah, 'average')}%</td>
 					<td class="text-nowrap">
 						<button 
 							class="btn btn-info btn-xs zoom-hover"
-							data-detail='${JSON.stringify(data[i].jumlah)}'
-							data-review='${JSON.stringify(data[i].review)}'
-							data-nama="${data[i].data.nama_tingkat}"
+							data-detail='${JSON.stringify(result.jumlah)}'
+							data-review='${JSON.stringify(result.review)}'
+							data-nama="${result.data.nama_tingkat}"
 							data-url="url"
 							data-back="masterdata_tingkat"
 							data-toggle="modal"
@@ -82,15 +91,15 @@ function tingkat(alert = null){
 							class="btn btn-warning btn-xs zoom-hover"
 							data-toggle="modal"
 							data-target="#formModalUbah"
-							data-nama="${data[i].data.nama_tingkat}"
-							data-id="${data[i].data.id}"
+							data-nama="${result.data.nama_tingkat}"
+							data-id="${result.data.id}"
 							onclick="editData(this)"
 						>Edit</button>
 						<button 
 							class="btn btn-danger btn-xs zoom-hover"
-							data-id="${data[i].data.id}"
+							data-id="${result.data.id}"
 							data-url="url" 
-							data-nama="${data[i].data.nama_tingkat}" 
+							data-nama="${result.data.nama_tingkat}" 
 							onclick="hapusData(this)"
 							data-toggle="modal"
 							data-target="#modal-delete"
@@ -98,7 +107,7 @@ function tingkat(alert = null){
 					</td>
 				</tr>
 			`;
-		}
+		});
 		return table;}
 	const modalTambah = `
 		<!-- modal form tambah -->

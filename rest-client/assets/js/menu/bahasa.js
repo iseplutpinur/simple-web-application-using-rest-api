@@ -1,6 +1,6 @@
 function bahasa(alert = null){
-	cekKoneksi = false;
-	const header = `
+	cekKoneksi        = false;
+	const header      = `
 		<div class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
@@ -35,6 +35,9 @@ function bahasa(alert = null){
 												<th>Nama</th>
 												<th>Total</th>
 												<th>Selesai</th>
+												<th>Materi Total</th>
+												<th>Materi Selesai</th>
+												<th>Persentese</th>
 												<th>Opsi</th>
 											</tr>
 										</thead>
@@ -47,6 +50,9 @@ function bahasa(alert = null){
 		<th>Nama</th>
 		<th>Total</th>
 		<th>Selesai</th>
+		<th>Materi Total</th>
+		<th>Materi Selesai</th>
+		<th>Persentese</th>
 		<th>Opsi</th>
 		</tr>
 		</tfoot>
@@ -58,20 +64,23 @@ function bahasa(alert = null){
 		</div>
 		</section>`;
 	const tableBody   = (data) => {
-		let table = ``;
-		for (let i = 0; i<data.length; i++){
+		let table     = ``;
+		data.forEach((result, i)=>{
 			table += `
 				<tr>
 					<td style="width: 10px;">${i+1}</td>
-					<td>${data[i].data.nama_bahasa}</td>
-					<td class="text-right">${data[i].jumlah.length}</td>
-					<td class="text-right">${data[i].review.jumlahMateriSelesai}</td>
+					<td>${result.data.nama_bahasa}</td>
+					<td class="text-right">${result.jumlah.length}</td>
+					<td class="text-right">${result.review.jumlahMateriSelesai}</td>
+					<td class="text-right">${countMateri(result.jumlah)}</td>
+					<td class="text-right">${countMateri(result.jumlah, 'selesai')}</td>
+					<td class="text-right">${countMateri(result.jumlah, 'average')}%</td>
 					<td class="text-nowrap">
 						<button 
 							class="btn btn-info btn-xs zoom-hover"
-							data-detail='${JSON.stringify(data[i].jumlah)}'
-							data-review='${JSON.stringify(data[i].review)}'
-							data-nama="${data[i].data.nama_bahasa}"
+							data-detail='${JSON.stringify(result.jumlah)}'
+							data-review='${JSON.stringify(result.review)}'
+							data-nama="${result.data.nama_bahasa}"
 							data-url="url"
 							data-back="masterdata_bahasa"
 							data-toggle="modal"
@@ -82,15 +91,15 @@ function bahasa(alert = null){
 							class="btn btn-warning btn-xs zoom-hover"
 							data-toggle="modal"
 							data-target="#formModalUbah"
-							data-nama="${data[i].data.nama_bahasa}"
-							data-id="${data[i].data.id}"
+							data-nama="${result.data.nama_bahasa}"
+							data-id="${result.data.id}"
 							onclick="editData(this)"
 						>Edit</button>
 						<button 
 							class="btn btn-danger btn-xs zoom-hover"
-							data-id="${data[i].data.id}"
+							data-id="${result.data.id}"
 							data-url="url" 
-							data-nama="${data[i].data.nama_bahasa}" 
+							data-nama="${result.data.nama_bahasa}" 
 							onclick="hapusData(this)"
 							data-toggle="modal"
 							data-target="#modal-delete"
@@ -98,7 +107,7 @@ function bahasa(alert = null){
 					</td>
 				</tr>
 			`;
-		}
+			});
 		return table;}
 	const modalTambah = `
 		<!-- modal form tambah -->

@@ -204,4 +204,4 @@ function enkripsi(data){
 	}
 	return result;
 }
-mainPageSwitcher();
+mainPageSwitcher(true);

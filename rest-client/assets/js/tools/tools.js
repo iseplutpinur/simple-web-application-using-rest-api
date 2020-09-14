@@ -450,3 +450,17 @@ function detailDataLayer(idxyz) {
 	getData();
 	setTimeout(coba, 7000);
 }
+
+function countMateri (data, statment = "total"){
+	if (statment == "total" || statment == "selesai") {
+		let count = 0;
+		data.forEach((result)=>{
+			count += Number(result[statment]);
+		});
+		return count;
+	} else if (statment == "average"){
+		if (countMateri(data) != 0) {
+			return ((100/countMateri(data))*countMateri(data, 'selesai')).toFixed(2);
+		} else return 0;
+	} else return 0;
+}
